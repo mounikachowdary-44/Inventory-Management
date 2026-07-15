@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Sales History — Inventory Ledger{% endblock %}
+{% block content %}
+
+<div class="ledger-header">
+  <div>
+    <h1>Sales History</h1>
+    <div class="subtitle">Every recorded transaction, most recent first.</div>
+  </div>
+</div>
+
+<div class="actions-row">
+  <a class="btn" href="{{ url_for('record_sale') }}">+ Record Sale</a>
+</div>
+
+{% if sales %}
+<table class="ledger-table">
+  <thead>
+    <tr>
+      <th class="mono-h">Date</th>
+      <th class="mono-h">ID</th>
+      <th>Product</th>
+      <th class="num mono-h">Qty</th>
+      <th class="num mono-h">Unit Price</th>
+      <th class="num mono-h">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in sales %}
+    <tr>
+      <td class="mono">{{ s.date }}</td>
+      <td class="mono">{{ s.product_id }}</td>
+      <td>{{ s.product_name }}</td>
+      <td class="mono num">{{ s.quantity_sold }}</td>
+      <td class="mono num">₹{{ "%.2f"|format(s.unit_price) }}</td>
+      <td class="mono num">₹{{ "%.2f"|format(s.total_amount) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">No sales recorded yet.</div>
+{% endif %}
+
+{% endblock %}

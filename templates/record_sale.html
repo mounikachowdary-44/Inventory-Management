@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Record Sale — Inventory Ledger{% endblock %}
+{% block content %}
+
+<div class="ledger-header">
+  <div>
+    <h1>Record Sale</h1>
+    <div class="subtitle">Log a sale — stock and revenue update automatically.</div>
+  </div>
+</div>
+
+<form class="card-form" method="POST">
+  <div class="field">
+    <label for="product_id">Product ID</label>
+    <select id="product_id" name="product_id" required>
+      <option value="" disabled selected>Select a product…</option>
+      {% for p in products %}
+      <option value="{{ p.product_id }}">{{ p.product_id }} — {{ p.name }} (in stock: {{ p.quantity }}, ₹{{ "%.2f"|format(p.price) }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label for="quantity">Quantity Sold</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+    <div class="hint">Total amount is calculated automatically from the product's price.</div>
+  </div>
+  <button class="btn" type="submit">Record Sale</button>
+  <a class="btn secondary" href="{{ url_for('dashboard') }}">Cancel</a>
+</form>
+
+{% endblock %}

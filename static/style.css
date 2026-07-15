@@ -1,0 +1,351 @@
+/* ============================================================
+   Inventory Ledger — visual system
+   Palette:
+     --ink-900  #16262A  deep teal-charcoal (chrome / sidebar)
+     --ink-700  #24393E  raised chrome surfaces
+     --paper    #EEE8DA  ledger page (warm, slightly green-grey, not cream)
+     --paper-2  #E4DCC8  ledger page shadow line / alt row
+     --rule     #C9BFA4  hairline rule colour on paper
+     --gold     #C9A227  primary action / brand accent
+     --gold-ink #6B551A  text-on-gold
+     --rust     #B5482A  reserved ONLY for low-stock / danger states
+     --moss     #4C7A5B  reserved ONLY for healthy-stock / success states
+   Type:
+     display : 'Roboto Slab' (ledger-book headings)
+     body    : 'Inter' (UI text)
+     mono    : 'IBM Plex Mono' (all figures — IDs, quantities, currency)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --ink-900: #16262A;
+  --ink-700: #24393E;
+  --paper: #EEE8DA;
+  --paper-2: #E4DCC8;
+  --rule: #C9BFA4;
+  --gold: #C9A227;
+  --gold-ink: #4A3B10;
+  --rust: #B5482A;
+  --moss: #4C7A5B;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink-900);
+  color: #2A241A;
+  font-family: 'Inter', sans-serif;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ("the spine of the ledger book") ---------- */
+.sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  background: var(--ink-900);
+  color: #C9CFCE;
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid #0E1A1D;
+}
+
+.brand {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #F4EFE2;
+  padding: 0 24px 22px;
+  border-bottom: 1px solid #33474C;
+  margin-bottom: 14px;
+  letter-spacing: 0.01em;
+}
+
+.brand span {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.66rem;
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin-top: 4px;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 24px;
+  color: #A9B3B1;
+  text-decoration: none;
+  font-size: 0.92rem;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.nav-tab .tab-no {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: #5F7975;
+  min-width: 18px;
+}
+
+.nav-tab:hover {
+  background: var(--ink-700);
+  color: #F4EFE2;
+}
+
+.nav-tab.active {
+  background: var(--ink-700);
+  color: var(--gold);
+  border-left-color: var(--gold);
+  font-weight: 600;
+}
+
+.nav-tab.active .tab-no { color: var(--gold); }
+
+/* ---------- Main ledger page ---------- */
+.ledger {
+  flex: 1;
+  background: var(--paper);
+  padding: 40px 48px;
+  min-height: 100vh;
+}
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  border-bottom: 2px solid var(--ink-900);
+  padding-bottom: 14px;
+}
+
+.ledger-header h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.55rem;
+  margin: 0;
+  color: var(--ink-900);
+}
+
+.ledger-header .subtitle {
+  font-size: 0.85rem;
+  color: #6B6656;
+  margin-top: 4px;
+}
+
+.date-stamp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: #6B6656;
+  text-align: right;
+}
+
+/* ---------- Flash messages ---------- */
+.flash {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--moss);
+  background: #E4EDE6;
+  color: #2A3F30;
+}
+.flash.error {
+  border-left-color: var(--rust);
+  background: #F2E1DA;
+  color: #5A2415;
+}
+
+/* ---------- Stat strip ---------- */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 32px;
+}
+
+.stat {
+  background: var(--paper);
+  padding: 16px 18px;
+}
+
+.stat .label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6B6656;
+  margin-bottom: 6px;
+}
+
+.stat .value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.stat .value.rust { color: var(--rust); }
+
+/* ---------- Table (ledger rows) ---------- */
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+}
+
+.ledger-table thead th {
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #6B6656;
+  padding: 8px 14px;
+  border-bottom: 2px solid var(--ink-900);
+}
+
+.ledger-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.ledger-table td.mono, .ledger-table th.mono-h {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.ledger-table tbody tr:hover { background: var(--paper-2); }
+
+.num { text-align: right; }
+
+/* Signature element: stock gauge — a small fill bar that encodes
+   real stock health, not decoration. */
+.gauge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gauge-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  min-width: 28px;
+  text-align: right;
+}
+.gauge-track {
+  width: 64px;
+  height: 6px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  position: relative;
+}
+.gauge-fill {
+  height: 100%;
+}
+.gauge-fill.ok { background: var(--moss); }
+.gauge-fill.low { background: var(--gold); }
+.gauge-fill.critical { background: var(--rust); }
+
+.tag-critical { color: var(--rust); font-weight: 600; }
+
+/* ---------- Buttons & forms ---------- */
+.btn {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 18px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--gold);
+  color: var(--gold-ink);
+  transition: filter 0.15s;
+}
+.btn:hover { filter: brightness(0.94); }
+.btn.secondary {
+  background: transparent;
+  color: var(--ink-900);
+  border: 1px solid var(--ink-900);
+}
+.btn.danger {
+  background: var(--rust);
+  color: #F8E9E3;
+}
+.btn.small { padding: 5px 11px; font-size: 0.75rem; }
+
+.actions-row { margin-bottom: 22px; display: flex; gap: 10px; }
+
+form.card-form {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 26px 28px;
+  max-width: 480px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6B6656;
+  margin-bottom: 5px;
+}
+.field input, .field select {
+  width: 100%;
+  padding: 9px 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.92rem;
+  border: 1px solid var(--rule);
+  background: #FBF8F1;
+  color: #2A241A;
+}
+.field input:focus, .field select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.field .hint { font-size: 0.72rem; color: #8B8570; margin-top: 4px; }
+
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: #6B6656;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  border: 1px dashed var(--rule);
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+  max-width: 460px;
+}
+.search-bar input {
+  flex: 1;
+  padding: 9px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  border: 1px solid var(--rule);
+  background: #FBF8F1;
+}
+
+@media (max-width: 780px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 12px 0; }
+  .brand { display: none; }
+  .ledger { padding: 24px 20px; }
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+}

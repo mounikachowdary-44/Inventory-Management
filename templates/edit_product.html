@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Edit Product — Inventory Ledger{% endblock %}
+{% block content %}
+
+<div class="ledger-header">
+  <div>
+    <h1>Edit Product</h1>
+    <div class="subtitle">Updating <strong>{{ product.product_id }}</strong> — {{ product.name }}</div>
+  </div>
+</div>
+
+<form class="card-form" method="POST">
+  <div class="field">
+    <label for="name">Product Name</label>
+    <input type="text" id="name" name="name" value="{{ product.name }}" required>
+  </div>
+  <div class="field">
+    <label for="category">Category</label>
+    <input type="text" id="category" name="category" value="{{ product.category }}" required>
+  </div>
+  <div class="field">
+    <label for="price">Price (₹)</label>
+    <input type="number" id="price" name="price" step="0.01" min="0" value="{{ product.price }}" required>
+  </div>
+  <div class="field">
+    <label for="quantity">Quantity Available</label>
+    <input type="number" id="quantity" name="quantity" min="0" value="{{ product.quantity }}" required>
+  </div>
+  <button class="btn" type="submit">Save Changes</button>
+  <a class="btn secondary" href="{{ url_for('dashboard') }}">Cancel</a>
+</form>
+
+{% endblock %}

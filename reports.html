@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Reports — Inventory Ledger{% endblock %}
+{% block content %}
+
+<div class="ledger-header">
+  <div>
+    <h1>Reports</h1>
+    <div class="subtitle">Inventory and sales summaries, as of today.</div>
+  </div>
+  <div class="date-stamp">{{ today }}</div>
+</div>
+
+<h2 style="font-family:'Roboto Slab',serif; font-size:1.05rem; color:var(--ink-900); margin-top:0;">Inventory Report</h2>
+<div class="stat-strip">
+  <div class="stat">
+    <div class="label">Total Products</div>
+    <div class="value">{{ inv.total_products }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Total Categories</div>
+    <div class="value">{{ inv.total_categories }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Available Stock</div>
+    <div class="value">{{ inv.total_available_stock }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Categories on File</div>
+    <div class="value" style="font-size:0.85rem; font-weight:500;">{{ inv.categories | join(', ') if inv.categories else '—' }}</div>
+  </div>
+</div>
+
+<h2 style="font-family:'Roboto Slab',serif; font-size:1.05rem; color:var(--ink-900);">Sales Report</h2>
+<div class="stat-strip">
+  <div class="stat">
+    <div class="label">Total Transactions</div>
+    <div class="value">{{ sales.total_sales_transactions }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Products Sold</div>
+    <div class="value">{{ sales.total_products_sold }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Revenue Generated</div>
+    <div class="value">₹{{ "%.2f"|format(sales.total_revenue) }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Best-Selling Product</div>
+    <div class="value" style="font-size:0.95rem; font-weight:500;">{{ sales.most_sold_product or '—' }}</div>
+  </div>
+</div>
+
+{% endblock %}

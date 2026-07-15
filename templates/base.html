@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Inventory Ledger{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <nav class="sidebar">
+      <div class="brand">Inventory Ledger
+        <span>IBI · STOCK &amp; SALES</span>
+      </div>
+      <a class="nav-tab {{ 'active' if active=='dashboard' else '' }}" href="{{ url_for('dashboard') }}">
+        <span class="tab-no">01</span> Products
+      </a>
+      <a class="nav-tab {{ 'active' if active=='add_product' else '' }}" href="{{ url_for('add_product') }}">
+        <span class="tab-no">02</span> Add Product
+      </a>
+      <a class="nav-tab {{ 'active' if active=='stock' else '' }}" href="{{ url_for('add_stock') }}">
+        <span class="tab-no">03</span> Add Stock
+      </a>
+      <a class="nav-tab {{ 'active' if active=='sale' else '' }}" href="{{ url_for('record_sale') }}">
+        <span class="tab-no">04</span> Record Sale
+      </a>
+      <a class="nav-tab {{ 'active' if active=='sales' else '' }}" href="{{ url_for('sales_history') }}">
+        <span class="tab-no">05</span> Sales History
+      </a>
+      <a class="nav-tab {{ 'active' if active=='reports' else '' }}" href="{{ url_for('reports') }}">
+        <span class="tab-no">06</span> Reports
+      </a>
+      <a class="nav-tab {{ 'active' if active=='low_stock' else '' }}" href="{{ url_for('low_stock') }}">
+        <span class="tab-no">07</span> Low Stock
+      </a>
+    </nav>
+
+    <main class="ledger">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ 'error' if category == 'error' else '' }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

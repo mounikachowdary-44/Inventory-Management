@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Low Stock — Inventory Ledger{% endblock %}
+{% block content %}
+
+<div class="ledger-header">
+  <div>
+    <h1>Low Stock Alert</h1>
+    <div class="subtitle">Products below the 10-unit threshold.</div>
+  </div>
+</div>
+
+{% if products %}
+<table class="ledger-table">
+  <thead>
+    <tr>
+      <th class="mono-h">ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Stock</th>
+      <th>Supplier</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td class="mono">{{ p.product_id }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.category }}</td>
+      <td class="mono tag-critical">{{ p.quantity }}</td>
+      <td>{{ p.supplier }}</td>
+      <td><a class="btn small" href="{{ url_for('add_stock') }}">Restock</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">✅ All products have sufficient stock (10+ units).</div>
+{% endif %}
+
+{% endblock %}
