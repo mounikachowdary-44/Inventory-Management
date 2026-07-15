@@ -148,3 +148,10 @@ e.g. the main menu, a product table, and a sales report.)*
 
 Built as part of the **Infobharat Interns** Python Development Internship
 Program.
+
+## Author
+Name: Yaramati Mounika Chowdary
+Project: Inventory Management
+
+## License
+This project is based on the educational and academic purposes.
