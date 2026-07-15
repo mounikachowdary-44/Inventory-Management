@@ -150,7 +150,7 @@ Built as part of the **Infobharat Interns** Python Development Internship
 Program.
 
 ## Author
-Name: Yaramati Mounika Chowdary
+Name: Yaramati Lakshmi Mounika
 Project: Inventory Management
 
 ## License
